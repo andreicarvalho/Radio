@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+    <title>Rádio Web</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .logo {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        #muteButton {
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 24px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        #audioPlayer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="./icons/logo.png" alt="Logo da Rádio" class="logo">
+        <h1></h1>
+        <button id="muteButton" class="button">Mudo</button>
+        <a href="https://api.whatsapp.com/send?phone=48998296674" target="_blank" class="button">
+            <img src="./icons/whatsapp.png" alt="WhatsApp">
+            WhatsApp
+        </a>
+    </div>
+
+    <audio id="audioPlayer" autoplay>
+        <source src="sua_musica.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var audio = document.getElementById("audioPlayer");
+            var muteButton = document.getElementById("muteButton");
+
+            muteButton.addEventListener("click", function() {
+                if (audio.muted) {
+                    audio.muted = false;
+                    muteButton.textContent = "Mudo";
+                } else {
+                    audio.muted = true;
+                    muteButton.textContent = "Desmutar";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -26,9 +26,7 @@
             height: auto;
         }
         audio {
-            width: 100%;
-            background-color: #fff;
-            border-radius: 5px;
+            display: none; /* Oculta o player de áudio */
         }
 
         .whatsapp-button {
@@ -43,6 +41,47 @@
         .whatsapp-button:hover {
             background-color: #128C7E;
         }
+
+        /* Estilizando os botões de controle de áudio */
+        #audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #audio-controls button {
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            background-size: cover;
+        }
+
+        #audio-controls button:hover {
+            background-color: #128C7E;
+        }
+
+        /* Estilizando o botão de play */
+        #play-btn {
+            background-color: #FFFF00; /* amarelo */
+            background-image: url('./icons/play.png');
+        }
+
+        /* Estilizando o botão de mute */
+        #mute-btn {
+            background-color: #FF0000; /* amarelo */
+            background-image: url('./icons/mute.png');
+        }
+
+        /* Estilizando o botão de mute quando mudo */
+        #mute-btn.muted {
+            background-color: #FF0000; /* vermelho quando mudo */
+        }
     </style>
 </head>
 <body>
@@ -52,11 +91,61 @@
             <img class="player-img" src="./icons/logo.png" alt="Imagem do player">
         </div>
         
-        <audio controls autoplay>
-            <source src="http://localhost:8000/HomeStudio" type="audio/mpegurl">
+        <audio id="audio-player" controls>
             Seu navegador não suporta o elemento de áudio.
         </audio>
         
+        <div id="audio-controls">
+            <button id="play-btn"></button>
+            <button id="mute-btn"></button>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const audioPlayer = document.getElementById("audio-player");
+                const playBtn = document.getElementById("play-btn");
+                const muteBtn = document.getElementById("mute-btn");
+
+                // Função para carregar e reproduzir o arquivo M3U
+                function loadAndPlayAudio(url) {
+                    audioPlayer.src = url;
+                    audioPlayer.play();
+                    muteBtn.classList.remove("muted");
+                    muteBtn.style.backgroundImage = "url('./icons/sound.png')";
+                }
+				
+                // Event listener para o botão de play
+                playBtn.addEventListener("click", function() {
+                    if (audioPlayer.muted) {
+                        audioPlayer.muted = false;
+                        muteBtn.classList.remove("muted");
+                        muteBtn.style.backgroundImage = "url('./icons/sound.png')";
+						muteBtn.style.backgroundColor = "#FFFF00"; /* Define a cor vermelha */
+                    } else {
+                        loadAndPlayAudio("http://127.0.0.1:8000/HomeStudio");
+                        playBtn.style.backgroundColor = "#FFFF00"; /* Altera a cor para amarelo quando reproduzindo */
+						muteBtn.style.backgroundColor = "#FFFF00"; /* Define a cor vermelha */
+						muteBtn.style.backgroundImage = "url('./icons/sound.png')";
+                    }
+                });
+
+                // Event listener para o botão de mute
+                muteBtn.addEventListener("click", function() {
+                    if (audioPlayer.muted) {
+                        audioPlayer.muted = false;
+                        muteBtn.classList.remove("muted");
+                        muteBtn.style.backgroundImage = "url('./icons/sound.png')";
+						muteBtn.style.backgroundColor = "#FFFF00"; /* Define a cor vermelha */
+                    } else {
+                        audioPlayer.muted = true;
+                        muteBtn.classList.add("muted");
+                        muteBtn.style.backgroundImage = "url('./icons/mute.png')";
+						muteBtn.style.backgroundColor = "#FF0000"; /* Define a cor vermelha */
+                    }
+                });
+            });
+        </script>
+
         <a class="whatsapp-button" href="https://api.whatsapp.com/send?phone=48998296674">Entre em contato pelo WhatsApp</a>
     </div>
 </body>

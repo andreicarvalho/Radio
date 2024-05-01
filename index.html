@@ -1,106 +1,63 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.7">
-    <title>Rádio Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato via WhatsApp</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #000000;
+            background-color: #000;
             color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
         }
-
         .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
             text-align: center;
-            margin-top: 20px;
         }
 
-        .logo {
-            width: 400px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        .button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            margin-bottom: 10px;
-        }
-
-        #muteButton {
-            background-color: #00913f; /* Verde */
-            color: #ffffff;
-        }
-
-        #muteButton:hover {
-            background-color: #b81414; /* Vermelho */
-        }
-
-        #whatsappButton {
-            background-color: #00913f; /* Verde claro */
-            color: #ffffff;
-        }
-
-        img {
-            width: 24px;
+        .player-img {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100%;
             height: auto;
-            vertical-align: middle;
-            margin-right: 5px;
+        }
+        audio {
+            width: 100%;
+            background-color: #fff;
+            border-radius: 5px;
         }
 
-        #audioPlayer {
-            display: none;
+        .whatsapp-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #25D366;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="./icons/logo.png" alt="Logo da Rádio" class="logo">
-        <h1></h1>
-        <button id="muteButton" class="button">Mudo</button>
-        <a href="https://api.whatsapp.com/send?phone=48998296674" target="_blank" class="button" id="whatsappButton">
-            <img src="./icons/whatsapp.png" alt="WhatsApp">
-            WhatsApp
-        </a>
+        
+        <div class="player-image">
+            <img class="player-img" src="./icons/logo.png" alt="Imagem do player">
+        </div>
+        
+        <audio controls autoplay>
+            <source src="http://127.0.0.1:8000/HomeStudio" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+        
+        <a class="whatsapp-button" href="https://api.whatsapp.com/send?phone=48998296674">Entre em contato pelo WhatsApp</a>
     </div>
-
-    <audio id="audioPlayer" autoplay>
-        <source src="http://127.0.0.1:8000/HomeStudio" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var audio = document.getElementById("audioPlayer");
-            var muteButton = document.getElementById("muteButton");
-
-            muteButton.addEventListener("click", function() {
-                if (audio.muted) {
-                    audio.muted = false;
-                    muteButton.textContent = "Mudo";
-                } else {
-                    audio.muted = true;
-                    muteButton.textContent = "Desmutar";
-                }
-            });
-        });
-    </script>
 </body>
 </html>

@@ -1,152 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato via WhatsApp</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-        }
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .player-img {
-            display: block;
-            margin: 0 auto 220px;
-            max-width: 100%;
-            height: auto;
-        }
-        audio {
-            display: none; /* Oculta o player de áudio */
-        }
-
-        .whatsapp-button {
-            display: block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #25D366;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .whatsapp-button:hover {
-            background-color: #128C7E;
-        }
-
-        /* Estilizando os botões de controle de áudio */
-        #audio-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        #audio-controls button {
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            margin: 0 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            background-size: cover;
-        }
-
-        #audio-controls button:hover {
-            background-color: #128C7E;
-        }
-
-        /* Estilizando o botão de play */
-        #play-btn {
-            background-color: #FFFF00; /* amarelo */
-            background-image: url('./icons/play.png');
-        }
-
-        /* Estilizando o botão de mute */
-        #mute-btn {
-            background-color: #FF0000; /* amarelo */
-            background-image: url('./icons/mute.png');
-        }
-
-        /* Estilizando o botão de mute quando mudo */
-        #mute-btn.muted {
-            background-color: #FF0000; /* vermelho quando mudo */
-        }
-    </style>
+    <title>Reproduzir Playlist M3U com VLC</title>
 </head>
 <body>
-    <div class="container">
-        
-        <div class="player-image">
-            <img class="player-img" src="./icons/logo.png" alt="Imagem do player">
-        </div>
-        
-        <audio id="audio-player" controls>
-            Seu navegador não suporta o elemento de áudio.
-        </audio>
-        
-        <div id="audio-controls">
-            <button id="play-btn"></button>
-            <button id="mute-btn"></button>
-        </div>
-        
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const audioPlayer = document.getElementById("audio-player");
-                const playBtn = document.getElementById("play-btn");
-                const muteBtn = document.getElementById("mute-btn");
+    <video id="vlc-player" controls autoplay></video>
 
-                // Função para carregar e reproduzir o arquivo M3U
-                function loadAndPlayAudio(url) {
-                    audioPlayer.src = url;
-                    audioPlayer.play();
-                    muteBtn.classList.remove("muted");
-                    muteBtn.style.backgroundImage = "url('./icons/sound.png')";
-                }
-				
-                // Event listener para o botão de play
-                playBtn.addEventListener("click", function() {
-                    if (audioPlayer.muted) {
-                        audioPlayer.muted = false;
-                        muteBtn.classList.remove("muted");
-                        muteBtn.style.backgroundImage = "url('./icons/sound.png')";
-						muteBtn.style.backgroundColor = "#FFFF00"; /* Define a cor vermelha */
-                    } else {
-                        loadAndPlayAudio("http://192.168.0.115:8000/HomeStudio");
-                        playBtn.style.backgroundColor = "#FFFF00"; /* Altera a cor para amarelo quando reproduzindo */
-						muteBtn.style.backgroundColor = "#FFFF00"; /* Define a cor vermelha */
-						muteBtn.style.backgroundImage = "url('./icons/sound.png')";
-                    }
-                });
+    <script>
+        // Caminho para o arquivo M3U
+        var playlistUrl = 'http://192.168.0.115:8000/HomeStudio';
 
-                // Event listener para o botão de mute
-                muteBtn.addEventListener("click", function() {
-                    if (audioPlayer.muted) {
-                        audioPlayer.muted = false;
-                        muteBtn.classList.remove("muted");
-                        muteBtn.style.backgroundImage = "url('./icons/sound.png')";
-						muteBtn.style.backgroundColor = "#FFFF00"; /* Define a cor vermelha */
-                    } else {
-                        audioPlayer.muted = true;
-                        muteBtn.classList.add("muted");
-                        muteBtn.style.backgroundImage = "url('./icons/mute.png')";
-						muteBtn.style.backgroundColor = "#FF0000"; /* Define a cor vermelha */
-                    }
-                });
-            });
-        </script>
+        // Instanciando o player VLC
+        var vlcPlayer = document.getElementById('vlc-player');
 
-        <a class="whatsapp-button" href="https://api.whatsapp.com/send?phone=48998296674">Entre em contato pelo WhatsApp</a>
-    </div>
+        // Setando a URL da playlist no player
+        vlcPlayer.src = playlistUrl;
+
+        // Checando se o player é suportado
+        if (vlcPlayer.canPlayType('application/x-mpegURL')) {
+            vlcPlayer.type = 'application/x-mpegURL';
+        } else {
+            console.error('O seu navegador não suporta a reprodução de arquivos M3U.');
+        }
+    </script>
 </body>
 </html>
